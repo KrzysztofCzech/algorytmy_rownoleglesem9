@@ -22,7 +22,8 @@
 srun /bin/hostname
 
 ## Zaladowanie modulu IntelMPI
-module add plgrid/tools/impi
+plgrid/tools/impi/2021.1.1-intel-compilers-2021.1.2
+module spider plgrid/tools/impi
 module spider plgrid/tools/impi
 ## przejscie do katalogu z ktorego wywolany zostal sbatch
 cd $SLURM_SUBMIT_DIR
