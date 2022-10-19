@@ -23,7 +23,7 @@ srun /bin/hostname
 
 ## Zaladowanie modulu IntelMPI
 module add plgrid/tools/impi
-
+module spider plgrid/tools/impi
 ## przejscie do katalogu z ktorego wywolany zostal sbatch
 cd $SLURM_SUBMIT_DIR
 
