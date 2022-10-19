@@ -29,7 +29,6 @@ def find_primes(upper, lower, primes):
     array = np.ones([upper - lower +1, 1])
     for prime in primes:
         mod = lower % prime
-        print(mod, lower, prime)
         idx =  (prime - mod)% prime
         while idx  <= upper - lower:
             array[idx] = 0
@@ -56,8 +55,8 @@ time2 = MPI.Wtime()
 if (comm.rank == 0):
     outputData = np.concatenate([prime_arr, *all_primes],axis = 0)
     print(outputData)
-    data = { "primes": outputData, "time": (time2- time1)/repeats, "n_nodes": comm.size}
-    json_object = json.dumps(data, indent = 2)
+    data = { "primes": list(map(int, outputData)), "time": (time2- time1)/repeats, "n_nodes": comm.size}
+    json_object = json.dumps(data)
     print(json_object)
 
 
