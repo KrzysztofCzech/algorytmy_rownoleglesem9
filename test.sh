@@ -3,7 +3,7 @@
 ## Nazwa zlecenia
 #SBATCH -J MPITest
 ## Liczba alokowanych węzłów
-#SBATCH -N 1
+#SBATCH -N 2
 ## Liczba zadań per węzeł (domyślnie jest to liczba alokowanych rdzeni na węźle)
 #SBATCH --ntasks-per-node=8
 ## Ilość pamięci przypadającej na jeden rdzeń obliczeniowy (domyślnie 5GB na rdzeń)
@@ -26,6 +26,6 @@ module add plgrid/tools/impi/2021.1.1-intel-compilers-2021.1.2
 ## przejscie do katalogu z ktorego wywolany zostal sbatch
 cd $SLURM_SUBMIT_DIR
 
-mpiexec ./sito1.py 1000
+mpiexec ./sito1.py 1000 20
 
 
