@@ -9,23 +9,25 @@
 ## Ilość pamięci przypadającej na jeden rdzeń obliczeniowy (domyślnie 5GB na rdzeń)
 #SBATCH --mem-per-cpu=5GB
 ## Maksymalny czas trwania zlecenia (format HH:MM:SS)
-#SBATCH --time=01:00:00 
+#SBATCH --time=08:00:00 
 ## Nazwa grantu do rozliczenia zużycia zasobów
 #SBATCH -A plgar2022-cpu
 ## Specyfikacja partycji
-#SBATCH -p plgrid-testing
+#SBATCH -p plgrid
 ## Plik ze standardowym wyjściem
 #SBATCH --output="output.out"
 ## Plik ze standardowym wyjściem błędów
 #SBATCH --error="error.err"
-
+#SBATCH -n 16
 srun /bin/hostname
-
 ## Zaladowanie modulu IntelMPI
-module add plgrid/tools/impi/2021.1.1-intel-compilers-2021.1.2
+module load scipy-bundle/2021.10-intel-2021b
 ## przejscie do katalogu z ktorego wywolany zostal sbatch
 cd $SLURM_SUBMIT_DIR
 
-mpiexec ./sito1.py 1000 20
 
 
+for i in {1 ... 16}
+do
+    mpiexec -n $i python ./lab3.py 10000 2 20
+done
