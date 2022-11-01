@@ -64,8 +64,8 @@ def getResult(comm, rank, numberOfCores, gridLegth, matrix, PartLenth, result):
         index = 0
 
         for row in matrix:
-            # if row[1] == 0:
-            #     break
+            if row[1] == 0:
+                break
             result[index] = row
             index += 1
 
@@ -74,8 +74,8 @@ def getResult(comm, rank, numberOfCores, gridLegth, matrix, PartLenth, result):
             comm.Recv(temp, source=i + 1)
 
             for x in temp:
-                # if x[1] == 0:
-                #     break
+                if x[1] == 0:
+                    break
 
                 result[index] = x
                 index += 1
@@ -89,8 +89,8 @@ def main():
     gridLegth = int(sys.argv[1])
     conductorVoltage =  int(sys.argv[2])
     conductorSize =  int(sys.argv[3])
-    iterations = 100
-    PartLenth = int(gridLegth / numberOfCores ) 
+    iterations = 1000
+    PartLenth = int(gridLegth / numberOfCores )+1 
 
     if rank == 0:
         times = 0
@@ -102,7 +102,6 @@ def main():
 
         begin, end = getParts(rank, numberOfCores, gridLegth)
         matrix = np.random.rand(PartLenth, gridLegth + 2)
-
         for y in range(end - begin + 1):
             matrix[y][0] = 0
             matrix[y][gridLegth + 1] = 0
@@ -131,20 +130,21 @@ def main():
 
         if rank == 0:
             times += time.time() - start
-            x = np.arange(1, gridLegth+1, 1)
-            y = np.arange(1, gridLegth+1,1) # transpose
-            x, y = np.meshgrid(x, y)
-            fig = plt.figure()
-            ax = plt.axes(projection='3d')
+            # x = np.arange(1, gridLegth+1, 1)
+            # y = np.arange(1, gridLegth+1,1) # transpose
+            # x, y = np.meshgrid(x, y)
+            # fig = plt.figure()
+            # ax = plt.axes(projection='3d')
 
 
-            ax.plot_surface(x, y, result[:,1:-1],cmap='viridis', edgecolor='none')
-            plt.show()
+            # ax.plot_surface(x, y, result[:,1:-1],cmap='viridis', edgecolor='none')
+            # plt.show()
 
     if rank == 0:
         print("Took: ", times / numberOfTests)
+        print(f"RESTULTS nr_of_cores {size} time {times/numberOfTests}")
 
 
 if __name__ == '__main__':
-    numberOfTests = 1
+    numberOfTests = 10
     main()
